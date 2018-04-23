@@ -2,21 +2,27 @@ import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-
+import axios from "axios";
 class Search extends Component {
     state = {
         'searchKey': '',
         'results': 5,
         'apiUrl': 'https://pixabay.com/api/',
-        'apiKey': '8780326-6d5a3ef3dd62d01cf4e009e6e'
+        'apiKey': '8780326-6d5a3ef3dd62d01cf4e009e6e',
+        'imgList': []
     }
 
     handleSearch = (e) => {
         this.setState({
             [e.target.name]: e.target.value
+        }, () => {
+            axios.get(`${this.state.apiUrl}?key=${this.state.apiKey}&q=${this.state.searchKey}&image_type=photo&safesearch=true&per_page=${this.state.results}`)
+                .then((res) => this.setState({ 'imgList': res.data.hits }))
         })
+
     }
-    handleResultsChange = (e) => {
+    handleResultsChange = (e, index, value) => {
+        this.setState({ results: value })
     }
     render() {
         return (
