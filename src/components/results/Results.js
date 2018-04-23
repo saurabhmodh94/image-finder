@@ -19,7 +19,7 @@ class Results extends Component {
 
     render() {
         let renderContent;
-        const { imgList } = this.props;
+        const { imgList } = this.props; // good stuff here
         const actions = [
             <FlatButton
                 label="Close"
@@ -35,7 +35,12 @@ class Results extends Component {
                             key={img.id}
                             title={img.tags}
                             subtitle={<span>by <b>{img.user}</b></span>}
-                            actionIcon={<IconButton onClick={() => this.handleOpen(img.largeImageURL)} > <ZoomIn color="white" /></IconButton>}
+                            actionIcon={
+                                <IconButton onClick={() => this.handleOpen(img.largeImageURL)} >
+                                    {/* Bind onClick here; otherwise infinite loop */}
+                                    <ZoomIn color="white" />
+                                </IconButton>
+                            }
                         >
                             <img src={img.largeImageURL} alt="" />
                         </GridTile>
@@ -58,6 +63,7 @@ class Results extends Component {
         )
     }
 }
+// props Validation: good practice
 Results.propTypes = {
     imgList: PropTypes.array.isRequired
 }

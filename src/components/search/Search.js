@@ -13,10 +13,10 @@ class Search extends Component {
         'imgList': []
     }
     apiCall = () => {
-        if (this.state.searchKey !== '') {
+        if (this.state.searchKey !== '') { // always use strict validation
             axios.get(`${this.state.apiUrl}?key=${this.state.apiKey}&q=${this.state.searchKey}&image_type=photo&safesearch=true&per_page=${this.state.results}`)
                 .then((res) => this.setState({ 'imgList': res.data.hits }))
-                .catch((e) => console.log(e))
+                .catch((e) => console.log(e)) // catch errors
         } else {
             this.setState({ imgList: [] })
         }
@@ -24,7 +24,7 @@ class Search extends Component {
 
     handleSearch = (e) => {
         this.setState({
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value // new notation
         }, () => this.apiCall())
 
     }
