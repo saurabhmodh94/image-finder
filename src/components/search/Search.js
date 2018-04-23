@@ -1,0 +1,49 @@
+import React, { Component } from 'react';
+import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+
+class Search extends Component {
+    state = {
+        'searchKey': '',
+        'results': 5,
+        'apiUrl': 'https://pixabay.com/api/',
+        'apiKey': '8780326-6d5a3ef3dd62d01cf4e009e6e'
+    }
+
+    handleSearch = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+    handleResultsChange = (e) => {
+    }
+    render() {
+        return (
+            <div>
+                <TextField
+                    name="searchKey"
+                    value={this.state.searchKey}
+                    onChange={this.handleSearch}
+                    floatingLabelText="Search For"
+                    fullWidth={true}
+                />
+                <SelectField
+                    name="results"
+                    floatingLabelText="Results"
+                    value={this.state.results}
+                    onChange={this.handleResultsChange}
+                >
+                    <MenuItem value={5} primaryText="5" />
+                    <MenuItem value={10} primaryText="10" />
+                    <MenuItem value={15} primaryText="15" />
+                    <MenuItem value={20} primaryText="20" />
+                    <MenuItem value={25} primaryText="25" />
+                </SelectField>
+
+            </div>
+        )
+    }
+}
+
+export default Search;
