@@ -6,9 +6,27 @@ import IconButton from "material-ui/IconButton";
 import ZoomIn from "material-ui/svg-icons/action/zoom-in";
 import Dialog from 'material-ui/Dialog';
 class Results extends Component {
+    state = {
+        open: false,
+    };
+    handleOpen = (img) => {
+        this.setState({ open: true, currentImage: img });
+    };
+
+    handleClose = () => {
+        this.setState({ open: false });
+    };
+
     render() {
         let renderContent;
         const { imgList } = this.props;
+        const actions = [
+            <FlatButton
+                label="Close"
+                primary={true}
+                onClick={this.handleClose}
+            />,
+        ];
         renderContent = imgList ?
             <GridList cols={3}>
                 {imgList.map(
@@ -17,15 +35,25 @@ class Results extends Component {
                             key={img.id}
                             title={img.tags}
                             subtitle={<span>by <b>{img.user}</b></span>}
-                            actionIcon={<IconButton><ZoomIn color="white" /></IconButton>}
+                            actionIcon={<IconButton onClick={() => this.handleOpen(img.largeImageURL)} > <ZoomIn color="white" /></IconButton>}
                         >
-                            <img src={img.webformatURL} alt="" />
+                            <img src={img.largeImageURL} alt="" />
                         </GridTile>
                 )}
-            </GridList> : null;
+            </GridList>
+            : null;
 
         return (
-            <div>{renderContent}</div>
+            <div>{renderContent}
+                <Dialog
+                    actions={actions}
+                    modal={false}
+                    open={this.state.open}
+                    onRequestClose={this.handleClose}
+                >
+                    <img src={this.state.currentImage} alt="" style={{ width: "100%" }} />
+                </Dialog>
+            </div>
 
         )
     }

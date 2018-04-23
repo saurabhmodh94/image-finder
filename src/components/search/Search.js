@@ -13,7 +13,7 @@ class Search extends Component {
         'imgList': []
     }
     apiCall = () => {
-        if (this.state.searchKey != '') {
+        if (this.state.searchKey !== '') {
             axios.get(`${this.state.apiUrl}?key=${this.state.apiKey}&q=${this.state.searchKey}&image_type=photo&safesearch=true&per_page=${this.state.results}`)
                 .then((res) => this.setState({ 'imgList': res.data.hits }))
                 .catch((e) => console.log(e))
